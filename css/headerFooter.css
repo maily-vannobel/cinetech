@@ -1,0 +1,45 @@
+/* DEBUT ALONZO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+body {
+    background-color: #0d1b2a !important;
+}
+.navbar {
+    background-color: #1b263b;
+}
+.navbar-brand {
+    color: #415a77 !important;
+}
+.nav-link {
+    color: white !important;
+    border-radius: 10px;
+}
+.nav-link:hover {
+    background-color: #0d1b2a;
+}
+.main {
+    margin: 50px;
+}
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.btn-categorie {
+    background-color: #1b263b !important;
+    color: white !important;
+}
+.btn-categorie:hover {
+    background-color: #141d2c !important;
+}
+.films-container {
+    margin-top: 30px;
+}
+.card {
+    background-color: #1b263b !important;
+    color: white !important;
+}
+.btn-light {
+    border: 0.1em !important;
+}
+/* Page series  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
