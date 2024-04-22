@@ -20,8 +20,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"
         ></script>
-        <script defer src="javascript/function.js"></script>
-        <script defer src="javascript/script.js"></script>
+        <script defer src="javascript/films.js"></script>
     </head>
 
     <body>
@@ -84,35 +83,35 @@
                 <section class="categories">
                     <button
                         type="button"
-                        class="btn btn-categorie"
+                        class="btn btn-categorie populaires-btn"
                         data-tv="popular"
                     >
                         Populaires
                     </button>
                     <button
                         type="button"
-                        class="btn btn-categorie"
+                        class="btn btn-categorie mieux-notes-btn"
                         data-tv="top_rated"
                     >
                         Les mieux notés
                     </button>
                     <button
                         type="button"
-                        class="btn btn-categorie"
+                        class="btn btn-categorie prochainement-btn"
                         data-tv="upcoming"
                     >
                         Prochainement
                     </button>
                     <button
                         type="button"
-                        class="btn btn-categorie"
+                        class="btn btn-categorie en-cours-btn"
                         data-tv="now_playing"
                     >
                         Lecture en cours
                     </button>
                 </section>
                 <section class="films-container">
-                    <div class="films">
+                    <div class="films-cards row">
                         <!-- <div class="card" style="max-width: 18em">
                             <img
                                 src="..."
