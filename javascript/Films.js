@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         filmsEnCours = await filmsFetchParCategoriesPageUn("now_playing");
     }
 
-    chargerFilms(); // Appel initial pour charger les films
+    chargerFilms();
 
     function afficherFilms(data) {
         const films = document.querySelector(".films-cards");
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>`;
         }
-        films.innerHTML = contenuHTML; // Mise à jour du contenu HTML une fois
+        films.innerHTML = contenuHTML;
     }
 
     document
