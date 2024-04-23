@@ -5,9 +5,10 @@
 }
 body {
     background-color: #0d1b2a !important;
+    overflow-x: hidden;
 }
 .main {
-    margin: 50px;
+    margin: 30px;
 }
 .categories {
     display: flex;
@@ -74,8 +75,15 @@ img {
     text-decoration: none;
     user-select: none;
 }
-
+.notes {
+    font: optional;
+    color: rgba(163, 163, 163, 0.768);
+}
+.notes-img {
+    text-align: center;
+}
 .bouton-categorie-active {
     border: 1px solid white !important;
 }
+
 /* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
