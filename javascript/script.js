@@ -1,11 +1,22 @@
 // DEBUT ALONZO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// Variables    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const url = window.location;
 const token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ODVhZjQ5MGUwM2FlYzg4NjAyYWM4NTBhYmNkYTQxMSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.82jT1cnded8rY4MYIJzmt5ie-PBT7Z7l_OhBn_3Ee8I";
+// Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if (url.pathname.includes("films.html")) {
-    // FETCH de l'API TMDB recuperation des differentes pages et tri des catégories (top rated, popular, upcoming, now playing)
+    // VARIABLE DE LA PAGE FILMS
+    let pageActuelle = 1;
+    const totalDesPages = 200;
+    let categorieActuelle = "popular";
+    const populaire = document.querySelector(".populaires-btn");
+    const mieuxNotes = document.querySelector(".mieux-notes-btn");
+    const prochainement = document.querySelector(".prochainement-btn");
+    const enCours = document.querySelector(".en-cours-btn");
+
+    // FUNCTION DE LA PAGE FILMS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     async function filmsFetchParCategoriesEtPage(categorie, page) {
         const options = {
             method: "GET",
@@ -28,7 +39,6 @@ if (url.pathname.includes("films.html")) {
             return [];
         }
     }
-    // creation des cartes a l'ouverture de la page films.html
     async function afficherFilms(categorie, page) {
         const filmsResultat = await filmsFetchParCategoriesEtPage(
             categorie,
@@ -38,9 +48,9 @@ if (url.pathname.includes("films.html")) {
         let contenuHTML = "";
         for (let i = 0; i < filmsResultat.length; i++) {
             contenuHTML += `
-            <div class="card mb-3" style="max-width: 540px; height:275px;">
+            <a class="card mb-3 lienCard" style="max-width: 540px; height:275px;" href="details.html?id=${filmsResultat[i].id}" target="_blank" >
                 <div class="row g-0">
-                    <div class="col-md-4" data-tv-id="${filmsResultat[i].id}">
+                    <div class="col-md-4">
                         <img src="https://image.tmdb.org/t/p/w500/${filmsResultat[i].poster_path}" class="img-fluid rounded-start" alt="image promotionnelle">
                     </div>
                     <div class="col-md-8">
@@ -51,30 +61,121 @@ if (url.pathname.includes("films.html")) {
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </a>`;
         }
         films.innerHTML = contenuHTML;
     }
-    // Basuler de categories et supprime les cartes precedents pour afficher les nouvelles
-    document
-        .querySelector(".populaires-btn")
-        .addEventListener("click", () => afficherFilms("popular", 1));
-    document
-        .querySelector(".mieux-notes-btn")
-        .addEventListener("click", () => afficherFilms("top_rated", 2));
-    document
-        .querySelector(".prochainement-btn")
-        .addEventListener("click", () => afficherFilms("upcoming", 3));
-    document
-        .querySelector(".en-cours-btn")
-        .addEventListener("click", () => afficherFilms("now_playing", 4));
+    function mettreAJourPagination() {
+        document.getElementById("page-un").style.display = "block";
+        document.getElementById("page-trois").style.display = "block";
 
-    afficherFilms("popular", 2);
+        document.getElementById("page-un").textContent = pageActuelle - 1;
+        document.getElementById("page-deux").textContent = pageActuelle;
+        document.getElementById("page-trois").textContent = pageActuelle + 1;
+
+        if (pageActuelle === 1) {
+            document.getElementById("page-un").style.display = "none";
+            document.getElementById("page-trois").textContent =
+                pageActuelle + 1;
+        }
+
+        if (pageActuelle === totalDesPages) {
+            document.getElementById("page-trois").style.display = "none";
+            document.getElementById("page-un").textContent = pageActuelle - 1;
+        }
+    }
+    //script page films !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    afficherFilms("popular", 1);
+    mettreAJourPagination();
+    populaire.classList.add("bouton-categorie-active");
+
+    document.getElementById("page-precedente").addEventListener("click", () => {
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherFilms(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+    document.getElementById("page-un").addEventListener("click", () => {
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherFilms(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+
+    document.getElementById("page-trois").addEventListener("click", () => {
+        if (pageActuelle < totalDesPages) {
+            pageActuelle++;
+            afficherFilms(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+    document.getElementById("page-suivante").addEventListener("click", () => {
+        if (pageActuelle < totalDesPages) {
+            pageActuelle++;
+            afficherFilms(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+
+    populaire.addEventListener("click", () => {
+        populaire.classList.add("bouton-categorie-active");
+        mieuxNotes.classList.remove("bouton-categorie-active");
+        prochainement.classList.remove("bouton-categorie-active");
+        enCours.classList.remove("bouton-categorie-active");
+        categorieActuelle = "popular";
+        pageActuelle = 1;
+        afficherFilms(categorieActuelle, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    mieuxNotes.addEventListener("click", () => {
+        populaire.classList.remove("bouton-categorie-active");
+        mieuxNotes.classList.add("bouton-categorie-active");
+        prochainement.classList.remove("bouton-categorie-active");
+        enCours.classList.remove("bouton-categorie-active");
+        categorieActuelle = "top_rated";
+        pageActuelle = 1;
+        afficherFilms(categorieActuelle, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    prochainement.addEventListener("click", () => {
+        populaire.classList.remove("bouton-categorie-active");
+        mieuxNotes.classList.remove("bouton-categorie-active");
+        prochainement.classList.add("bouton-categorie-active");
+        enCours.classList.remove("bouton-categorie-active");
+        categorieActuelle = "upcoming";
+        pageActuelle = 1;
+        afficherFilms(categorieActuelle, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    enCours.addEventListener("click", () => {
+        populaire.classList.remove("bouton-categorie-active");
+        mieuxNotes.classList.remove("bouton-categorie-active");
+        prochainement.classList.remove("bouton-categorie-active");
+        enCours.classList.add("bouton-categorie-active");
+        categorieCourante = "now_playing";
+        pageActuelle = 1;
+        afficherFilms(categorieCourante, pageActuelle);
+        mettreAJourPagination();
+    });
 }
-
 // Page series  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 if (url.pathname.includes("series.html")) {
-    async function filmsFetchParCategoriesEtPage(categorie, page) {
+    //VARIABLES DE LA PAGE SERIES
+    let pageActuelle = 1;
+    const totalDesPages = 200;
+    let categorieActuelle = "popular";
+    const populaire = document.querySelector(".populaires-btn");
+    const mieuxNotes = document.querySelector(".mieux-notes-btn");
+    const enDirect = document.querySelector(".en-direct-btn");
+    const aSuivre = document.querySelector(".aujourdhui-btn");
+    //FUNCTION DE LA PAGE SERIES
+    async function seriesFetchParCategoriesEtPage(categorie, page) {
         const options = {
             method: "GET",
             headers: {
@@ -84,7 +185,7 @@ if (url.pathname.includes("series.html")) {
         };
         try {
             const reponse = await fetch(
-                `https://api.themoviedb.org/3/movie/${categorie}?language=fr-FR&page=${page}`,
+                `https://api.themoviedb.org/3/tv/${categorie}?language=fr-FR&page=${page}`,
                 options
             );
 
@@ -96,47 +197,129 @@ if (url.pathname.includes("series.html")) {
             return [];
         }
     }
-
-    async function afficherFilms(categorie, page) {
-        const filmsResultat = await filmsFetchParCategoriesEtPage(
+    async function afficherSeries(categorie, page) {
+        const seriesResultat = await seriesFetchParCategoriesEtPage(
             categorie,
             page
         );
-        const films = document.querySelector(".films-cards");
+        const series = document.querySelector(".series-cards");
         let contenuHTML = "";
-        for (let i = 0; i < filmsResultat.length; i++) {
+        for (let i = 0; i < seriesResultat.length; i++) {
             contenuHTML += `
             <div class="card mb-3" style="max-width: 540px; height:275px;">
                 <div class="row g-0">
-                    <div class="col-md-4" data-tv-id="${filmsResultat[i].id}">
-                        <img src="https://image.tmdb.org/t/p/w500/${filmsResultat[i].poster_path}" class="img-fluid rounded-start" alt="image promotionnelle">
+                    <div class="col-md-4" data-tv-id="${seriesResultat[i].id}">
+                        <img src="https://image.tmdb.org/t/p/w500/${seriesResultat[i].poster_path}" class="img-fluid rounded-start" alt="image promotionnelle">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">${filmsResultat[i].title}</h5>
-                            <p class="card-text description">Description : ${filmsResultat[i].overview}</p>
-                            <small>Notes : ${filmsResultat[i].vote_average}</small>
+                            <h5 class="card-title">${seriesResultat[i].name}</h5>
+                            <p class="card-text description">Description : ${seriesResultat[i].overview}</p>
+                            <small>Notes : ${seriesResultat[i].vote_average}</small>
                         </div>
                     </div>
                 </div>
             </div>`;
         }
-        films.innerHTML = contenuHTML;
+        series.innerHTML = contenuHTML;
     }
+    function mettreAJourPagination() {
+        document.getElementById("page-un").style.display = "block";
+        document.getElementById("page-trois").style.display = "block";
 
-    document
-        .querySelector(".populaires-btn")
-        .addEventListener("click", () => afficherFilms("popular", 1));
-    document
-        .querySelector(".mieux-notes-btn")
-        .addEventListener("click", () => afficherFilms("top_rated", 2));
-    document
-        .querySelector(".prochainement-btn")
-        .addEventListener("click", () => afficherFilms("upcoming", 3));
-    document
-        .querySelector(".en-cours-btn")
-        .addEventListener("click", () => afficherFilms("now_playing", 4));
+        document.getElementById("page-un").textContent = pageActuelle - 1;
+        document.getElementById("page-deux").textContent = pageActuelle;
+        document.getElementById("page-trois").textContent = pageActuelle + 1;
 
-    afficherFilms("popular", 2);
+        if (pageActuelle === 1) {
+            document.getElementById("page-un").style.display = "none";
+            document.getElementById("page-trois").textContent =
+                pageActuelle + 1;
+        }
+
+        if (pageActuelle === totalDesPages) {
+            document.getElementById("page-trois").style.display = "none";
+            document.getElementById("page-un").textContent = pageActuelle - 1;
+        }
+    }
+    // SCRIPT DE LA PAGE SERIES
+    afficherSeries("popular", 1);
+    populaire.classList.add("bouton-categorie-active");
+
+    document.getElementById("page-precedente").addEventListener("click", () => {
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherSeries(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+    document.getElementById("page-un").addEventListener("click", () => {
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherSeries(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+
+    document.getElementById("page-trois").addEventListener("click", () => {
+        if (pageActuelle < totalDesPages) {
+            pageActuelle++;
+            afficherSeries(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+    document.getElementById("page-suivante").addEventListener("click", () => {
+        if (pageActuelle < totalDesPages) {
+            pageActuelle++;
+            afficherSeries(categorieActuelle, pageActuelle);
+            mettreAJourPagination();
+        }
+    });
+
+    populaire.addEventListener("click", () => {
+        populaire.classList.add("bouton-categorie-active");
+        mieuxNotes.classList.remove("bouton-categorie-active");
+        enDirect.classList.remove("bouton-categorie-active");
+        aSuivre.classList.remove("bouton-categorie-active");
+        categorieActuelle = "popular";
+        pageActuelle = 1;
+        afficherSeries(categorieActuelle, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    mieuxNotes.addEventListener("click", () => {
+        populaire.classList.remove("bouton-categorie-active");
+        mieuxNotes.classList.add("bouton-categorie-active");
+        enDirect.classList.remove("bouton-categorie-active");
+        aSuivre.classList.remove("bouton-categorie-active");
+        categorieActuelle = "top_rated";
+        pageActuelle = 1;
+        afficherSeries(categorieActuelle, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    enDirect.addEventListener("click", () => {
+        populaire.classList.remove("bouton-categorie-active");
+        mieuxNotes.classList.remove("bouton-categorie-active");
+        enDirect.classList.add("bouton-categorie-active");
+        aSuivre.classList.remove("bouton-categorie-active");
+        categorieActuelle = "on_the_air";
+        pageActuelle = 1;
+        afficherSeries(categorieActuelle, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    aSuivre.addEventListener("click", () => {
+        populaire.classList.remove("bouton-categorie-active");
+        mieuxNotes.classList.remove("bouton-categorie-active");
+        enDirect.classList.remove("bouton-categorie-active");
+        aSuivre.classList.add("bouton-categorie-active");
+        categorieCourante = "airing_today";
+        pageActuelle = 1;
+        afficherSeries(categorieCourante, pageActuelle);
+        mettreAJourPagination();
+    });
+
+    mettreAJourPagination();
 }
 // FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

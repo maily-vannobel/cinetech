@@ -1,12 +1,3 @@
-/* DEBUT ALONZO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-* {
-    margin: 0;
-    padding: 0;
-}
-/* Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-body {
-    background-color: #0d1b2a !important;
-}
 .navbar {
     background-color: #1b263b;
 }
@@ -20,58 +11,3 @@ body {
 .nav-link:hover {
     background-color: #0d1b2a;
 }
-.main {
-    margin: 50px;
-}
-.categories {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-.btn-categorie {
-    background-color: #1b263b !important;
-    color: white !important;
-}
-.btn-categorie:hover {
-    background-color: #141d2c !important;
-}
-.films-container {
-    margin-top: 30px;
-}
-.films-cards {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-img {
-    user-select: none;
-}
-.card {
-    background-color: #1b263b !important;
-    color: white !important;
-    cursor: pointer;
-}
-.card:hover {
-    box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
-        inset 0px 0px 50px -30px #000000;
-}
-.img-fluid {
-    margin-top: 10px;
-    border-radius: 5px;
-}
-.description {
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.page-link {
-    background-color: #1b263b !important;
-    border-color: #141d2c !important;
-}
-.page-link:hover {
-    background-color: #415a77 !important;
-}
-/* Page series  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-/* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
