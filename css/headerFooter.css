@@ -43,6 +43,9 @@ body {
     justify-content: center;
     gap: 15px;
 }
+img {
+    user-select: none;
+}
 .card {
     background-color: #1b263b !important;
     color: white !important;
@@ -58,11 +61,17 @@ body {
 }
 .description {
     display: -webkit-box;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.page-link {
+    background-color: #1b263b !important;
+    border-color: #141d2c !important;
+}
+.page-link:hover {
+    background-color: #415a77 !important;
+}
 /* Page series  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 /* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
