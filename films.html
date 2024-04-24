@@ -18,7 +18,12 @@
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
         <!-- FIN CSS -->
+
         <!-- DEBUT JAVASCRIPT -->
         <script
             defer
@@ -44,7 +49,12 @@
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <span class="material-icons">menu</span>
+                        <input type="checkbox" id="checkbox" />
+                        <label for="checkbox" class="toggle">
+                            <div class="bars" id="bar1"></div>
+                            <div class="bars" id="bar2"></div>
+                            <div class="bars" id="bar3"></div>
+                        </label>
                     </button>
                     <div
                         class="collapse navbar-collapse"
@@ -66,18 +76,15 @@
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
-                            <input
-                                class="form-control me-2"
-                                type="search"
-                                placeholder="Ex : Fight club"
-                                aria-label="Search"
-                            />
-                            <button
-                                class="btn btn-outline-primary"
-                                type="submit"
-                            >
-                                Recherche
-                            </button>
+                            <div class="inputbox">
+                                <input
+                                    type="text"
+                                    required="required"
+                                    id="recherche"
+                                />
+                                <span>Recherche</span>
+                                <i></i>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -106,6 +113,14 @@
                     </div>
                 </section>
                 <section class="films-container">
+                    <section class="recherche">
+                        <div class="resultatContainer row"></div>
+                    </section>
+                    <h3
+                        class="titre-de-page animate__animated animate__flipInX"
+                    >
+                        Films
+                    </h3>
                     <div class="films-cards row">
                         <!-- <div class="card" style="max-width: 18em">
                             <img

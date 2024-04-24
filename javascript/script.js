@@ -4,6 +4,7 @@
 const url = window.location;
 const token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ODVhZjQ5MGUwM2FlYzg4NjAyYWM4NTBhYmNkYTQxMSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.82jT1cnded8rY4MYIJzmt5ie-PBT7Z7l_OhBn_3Ee8I";
+
 // Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if (url.pathname.includes("films.html")) {
@@ -32,7 +33,7 @@ if (url.pathname.includes("films.html")) {
             );
 
             const data = await reponse.json();
-            console.log(data);
+            // console.log(data);
             return data.results;
         } catch (erreur) {
             console.error("Erreur lors du chargement du json", erreur);
@@ -191,7 +192,7 @@ if (url.pathname.includes("series.html")) {
             );
 
             const data = await reponse.json();
-            console.log(data);
+            // console.log(data);
             return data.results;
         } catch (erreur) {
             console.error("Erreur lors du chargement du json", erreur);
@@ -324,4 +325,92 @@ if (url.pathname.includes("series.html")) {
 
     mettreAJourPagination();
 }
+
+// autocompletion // barre de recherche !!!!!!!!!!!!!!!!!
+
+//Variables !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const barreDeRecherche = document.querySelector("#recherche");
+const conteneurResultatsRecherche = document.querySelector(
+    ".resultatsRecherche"
+);
+
+// functions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+async function recupererDonneesMulti(query) {
+    const options = {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${token}`, // Assurez-vous que 'token' est géré de manière sécurisée
+        },
+    };
+    try {
+        const reponse = await fetch(
+            `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(
+                query
+            )}&include_adult=true&language=fr-FR&page=1`,
+            options
+        );
+        if (reponse.ok) {
+            const donneesJson = await reponse.json();
+            return donneesJson.results;
+        } else {
+            throw new Error(
+                `Échec de la récupération des données avec le statut ${reponse.status}`
+            );
+        }
+    } catch (erreur) {
+        console.error("Erreur lors du chargement des données", erreur);
+        return [];
+    }
+}
+function obtenirTitre(element) {
+    return element.title || element.original_name || "Titre inconnu";
+}
+async function activerSaisieUtilisateurs() {
+    if (barreDeRecherche.value.length <= 1) {
+        document.querySelector(".resultatContainer").innerHTML = "";
+        return;
+    }
+    if (barreDeRecherche.value.length > 1) {
+        try {
+            const resultats = await recupererDonneesMulti(
+                barreDeRecherche.value
+            );
+            const resultatsRecherche =
+                document.querySelector(".resultatContainer");
+
+            let contenuHTML = "";
+            for (let i = 0; i < resultats.length; i++) {
+                const titre = obtenirTitre(resultats[i]);
+                contenuHTML += `
+                <a class="card mb-3 lienCard" style="max-width: 450px; " href="details.html?id=${resultats[i].id}" target="_blank" >
+                    <div class="row g-0">
+                        <div class="col-md-4 notes-img">
+                            <img src="https://image.tmdb.org/t/p/w500/${resultats[i].poster_path}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
+                            <small class="notes">Notes : ${resultats[i].vote_average}</small>
+                            </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">${titre}</h5>
+                                <p class="card-text description">Description : ${resultats[i].overview}</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </a>`;
+            }
+            resultatsRecherche.innerHTML = contenuHTML;
+        } catch (erreur) {
+            console.error(
+                "Erreur lors de la récupération des résultats de recherche",
+                erreur
+            );
+            conteneurResultatsRecherche.innerHTML =
+                "<li>Erreur lors de la recherche</li>";
+        }
+    }
+}
+
+barreDeRecherche.addEventListener("input", activerSaisieUtilisateurs);
+
 // FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

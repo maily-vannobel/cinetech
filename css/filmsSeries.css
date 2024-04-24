@@ -10,10 +10,28 @@ body {
 .main {
     margin: 30px;
 }
+
+.titre-de-page {
+    color: white;
+    text-align: center;
+}
+
+.resultatContainer {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 15px !important;
+}
 .categories {
     display: flex;
     justify-content: center;
     gap: 15px;
+}
+@media screen and (max-width: 500px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column !important;
+        gap: 15px;
+    }
 }
 .btn-categorie {
     background-color: #1b263b !important;
