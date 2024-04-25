@@ -1,0 +1,41 @@
+.filmContainer {
+  display: flex;
+}
+.serieContainer {
+  display: flex;
+}
+.card img {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.card {
+  height: auto;
+  width: 200px;
+}
+.card img:hover {
+  transform: scale(1.1);
+  overflow: visible;
+  cursor: pointer;
+  z-index: 1;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  margin-top: 10px; /* Ajoutez un espacement entre les boutons et les conteneurs */
+}
+h1 {
+  color: white;
+}
