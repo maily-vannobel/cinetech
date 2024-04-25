@@ -325,92 +325,187 @@ if (url.pathname.includes("series.html")) {
 
     mettreAJourPagination();
 }
-
-// autocompletion // barre de recherche !!!!!!!!!!!!!!!!!
-
-//Variables !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const barreDeRecherche = document.querySelector("#recherche");
-const conteneurResultatsRecherche = document.querySelector(
-    ".resultatsRecherche"
-);
-
-// functions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-async function recupererDonneesMulti(query) {
-    const options = {
-        method: "GET",
-        headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${token}`, // Assurez-vous que 'token' est géré de manière sécurisée
-        },
-    };
-    try {
-        const reponse = await fetch(
-            `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(
-                query
-            )}&include_adult=true&language=fr-FR&page=1`,
-            options
-        );
-        if (reponse.ok) {
-            const donneesJson = await reponse.json();
-            return donneesJson.results;
-        } else {
-            throw new Error(
-                `Échec de la récupération des données avec le statut ${reponse.status}`
+if (url.pathname.includes("inscription.html")) {
+    class obtenirJetonDAcces {
+        constructor() {
+            this.obtenirUnJetonBouton =
+                document.querySelector(".obtenir-jeton");
+            this.obtenirJetonDAcces.addEventListener(
+                "click",
+                fetchObtenirUnJeton
             );
         }
-    } catch (erreur) {
-        console.error("Erreur lors du chargement des données", erreur);
-        return [];
-    }
-}
-function obtenirTitre(element) {
-    return element.title || element.original_name || "Titre inconnu";
-}
-async function activerSaisieUtilisateurs() {
-    if (barreDeRecherche.value.length <= 1) {
-        document.querySelector(".resultatContainer").innerHTML = "";
-        return;
-    }
-    if (barreDeRecherche.value.length > 1) {
-        try {
-            const resultats = await recupererDonneesMulti(
-                barreDeRecherche.value
-            );
-            const resultatsRecherche =
-                document.querySelector(".resultatContainer");
+        async fetchObtenirUnJeton() {
+            const options = {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                    Authorization: "Bearer " + token,
+                },
+            };
+            try {
+                const reponse = await fetch(
+                    "https://api.themoviedb.org/3/authentication/token/new",
+                    options
+                );
 
-            let contenuHTML = "";
-            for (let i = 0; i < resultats.length; i++) {
-                const titre = obtenirTitre(resultats[i]);
-                contenuHTML += `
-                <a class="card mb-3 lienCard" style="max-width: 450px; " href="details.html?id=${resultats[i].id}" target="_blank" >
-                    <div class="row g-0">
-                        <div class="col-md-4 notes-img">
-                            <img src="https://image.tmdb.org/t/p/w500/${resultats[i].poster_path}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
-                            <small class="notes">Notes : ${resultats[i].vote_average}</small>
-                            </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">${titre}</h5>
-                                <p class="card-text description">Description : ${resultats[i].overview}</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </a>`;
+                const data = await reponse.json();
+                console.log(data);
+                return data.results;
+            } catch (erreur) {
+                console.error("Erreur lors du chargement du json", erreur);
+                return [];
             }
-            resultatsRecherche.innerHTML = contenuHTML;
+        }
+    }
+
+    async function postDonnesCompte() {
+        const jeton = document.querySelector(".jeton").value;
+
+        const recuperationDesDonnes = {
+            jeton: jeton,
+        };
+
+        const options = {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + jeton,
+            },
+            body: JSON.stringify(recuperationDesDonnes),
+        };
+
+        try {
+            const response = await fetch(
+                "https://api.themoviedb.org/3/authentication/session/new",
+                options
+            );
+
+            if (response.ok) {
+                const donneesJson = await response.json();
+                return donneesJson.results;
+            } else {
+                // Gérer les réponses d'erreur de l'API
+                throw new Error(
+                    "Failed to create account: " + response.statusText
+                );
+            }
         } catch (erreur) {
             console.error(
-                "Erreur lors de la récupération des résultats de recherche",
+                "Erreur lors du chargement des données (creationDeCompte fetch)",
                 erreur
             );
-            conteneurResultatsRecherche.innerHTML =
-                "<li>Erreur lors de la recherche</li>";
+            return [];
         }
+    }
+
+    document
+        .querySelector(".creer-un-compte")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            postDonnesCompte();
+        });
+
+    new obtenirJetonDAcces();
+}
+// autocompletion // barre de recherche !!!!!!!!!!!!!!!!!
+class rechercheAutoCompletion {
+    constructor() {
+        this.barreDeRecherche = document.querySelector("#recherche");
+        this.conteneurResultatsRecherche = document.querySelector(
+            ".resultatsRecherche"
+        );
+
+        // Attacher l'écouteur d'événements
+        this.barreDeRecherche.addEventListener("input", () =>
+            this.activerSaisieUtilisateurs()
+        );
+    }
+
+    async recupererDonneesMulti(query) {
+        const options = {
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                Authorization: "Bearer " + token,
+            },
+        };
+        try {
+            const reponse = await fetch(
+                `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(
+                    query
+                )}&include_adult=true&language=fr-FR&page=1`,
+                options
+            );
+            if (reponse.ok) {
+                const donneesJson = await reponse.json();
+                return donneesJson.results;
+            } else {
+                throw new Error(
+                    `Échec de la récupération des données avec le statut ${reponse.status}`
+                );
+            }
+        } catch (erreur) {
+            console.error("Erreur lors du chargement des données", erreur);
+            return [];
+        }
+    }
+
+    obtenirTitre(element) {
+        return element.title || element.original_name || "Titre inconnu";
+    }
+
+    async activerSaisieUtilisateurs() {
+        if (this.barreDeRecherche.value.length <= 1) {
+            document.querySelector(".resultatContainer").innerHTML = "";
+            return;
+        }
+        if (this.barreDeRecherche.value.length > 1) {
+            try {
+                const resultats = await this.recupererDonneesMulti(
+                    this.barreDeRecherche.value
+                );
+                const resultatsRecherche =
+                    document.querySelector(".resultatContainer");
+
+                let contenuHTML = "";
+                for (let i = 0; i < resultats.length; i++) {
+                    const titre = this.obtenirTitre(resultats[i]);
+                    contenuHTML += this.genererCarteHTML(resultats[i], titre);
+                }
+                resultatsRecherche.innerHTML = contenuHTML;
+            } catch (erreur) {
+                console.error(
+                    "Erreur lors de la récupération des résultats de recherche",
+                    erreur
+                );
+                this.conteneurResultatsRecherche.innerHTML =
+                    "<li>Erreur lors de la recherche</li>";
+            }
+        }
+    }
+
+    // Méthode pour générer le HTML pour une carte de résultat
+    genererCarteHTML(resultat, titre) {
+        return `
+        <a class="card mb-3 lienCard" style="max-width: 450px;" href="details.html?id=${resultat.id}" target="_blank">
+            <div class="row g-0">
+                <div class="col-md-4 notes-img">
+                    <img src="https://image.tmdb.org/t/p/w500/${resultat.poster_path}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
+                    <small class="notes">Notes : ${resultat.vote_average}</small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">${titre}</h5>
+                        <p class="card-text description">Description : ${resultat.overview}</p>
+                    </div>
+                </div>
+            </div>
+        </a>`;
     }
 }
 
-barreDeRecherche.addEventListener("input", activerSaisieUtilisateurs);
+new rechercheAutoCompletion();
 
 // FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
