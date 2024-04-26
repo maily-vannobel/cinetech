@@ -115,7 +115,7 @@ img {
     padding: 40px;
     margin: 20px auto;
     transform: translate(-50%, -55%);
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.107);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
     border-radius: 10px;
@@ -186,6 +186,26 @@ img {
     color: #272727;
     border-radius: 5px;
 }
+.obtenir-jeton {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
+    margin-top: 40px;
+    letter-spacing: 3px;
+}
+
+.obtenir-jeton:hover {
+    background: #fff;
+    color: #272727;
+    border-radius: 5px;
+}
 
 .login-box a span {
     position: absolute;
@@ -198,7 +218,7 @@ img {
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg, transparent, #fff);
-    animation: btn-anim1 1.5s linear infinite;
+    animation: btn-anim1 2.5s linear infinite;
 }
 
 @keyframes btn-anim1 {
@@ -218,8 +238,8 @@ img {
     width: 2px;
     height: 100%;
     background: linear-gradient(180deg, transparent, #fff);
-    animation: btn-anim2 1.5s linear infinite;
-    animation-delay: 0.375s;
+    animation: btn-anim2 2.5s linear infinite;
+    animation-delay: 1.375s;
 }
 
 @keyframes btn-anim2 {
@@ -239,8 +259,8 @@ img {
     width: 100%;
     height: 2px;
     background: linear-gradient(270deg, transparent, #fff);
-    animation: btn-anim3 1.5s linear infinite;
-    animation-delay: 0.75s;
+    animation: btn-anim3 2.5s linear infinite;
+    animation-delay: 1.75s;
 }
 
 @keyframes btn-anim3 {
@@ -261,7 +281,7 @@ img {
     height: 100%;
     background: linear-gradient(360deg, transparent, #fff);
     animation: btn-anim4 1.5s linear infinite;
-    animation-delay: 1.125s;
+    animation-delay: 2.125s;
 }
 
 @keyframes btn-anim4 {
@@ -304,6 +324,10 @@ img {
     font-size: 14px;
     width: 300px;
     height: auto;
+}
+.text-info-creation {
+    color: white;
+    text-align: center;
 }
 /*fin connexion inscription !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 /* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */

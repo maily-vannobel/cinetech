@@ -3,7 +3,7 @@
 // Variables    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 const url = window.location;
 const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ODVhZjQ5MGUwM2FlYzg4NjAyYWM4NTBhYmNkYTQxMSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.82jT1cnded8rY4MYIJzmt5ie-PBT7Z7l_OhBn_3Ee8I";
+    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZTg2NzAxNjk2NThhZTk3ZDY5OTBjYzhjYzQwZDU0YSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bqPMIPnQxZ_TZREm_GNHPOwRkHflMBDpuVFDFTmteUU";
 
 // Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -326,88 +326,94 @@ if (url.pathname.includes("series.html")) {
     mettreAJourPagination();
 }
 if (url.pathname.includes("inscription.html")) {
-    class obtenirJetonDAcces {
-        constructor() {
-            this.obtenirUnJetonBouton =
-                document.querySelector(".obtenir-jeton");
-            this.obtenirJetonDAcces.addEventListener(
-                "click",
-                fetchObtenirUnJeton
-            );
-        }
-        async fetchObtenirUnJeton() {
-            const options = {
-                method: "GET",
-                headers: {
-                    accept: "application/json",
-                    Authorization: "Bearer " + token,
-                },
-            };
-            try {
-                const reponse = await fetch(
-                    "https://api.themoviedb.org/3/authentication/token/new",
-                    options
-                );
-
-                const data = await reponse.json();
-                console.log(data);
-                return data.results;
-            } catch (erreur) {
-                console.error("Erreur lors du chargement du json", erreur);
-                return [];
-            }
-        }
-    }
-
-    async function postDonnesCompte() {
-        const jeton = document.querySelector(".jeton").value;
-
-        const recuperationDesDonnes = {
-            jeton: jeton,
-        };
-
+    async function fetchRequestToken() {
         const options = {
-            method: "POST",
+            method: "GET",
             headers: {
                 Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + jeton,
+                Authorization: "Bearer " + token,
             },
-            body: JSON.stringify(recuperationDesDonnes),
         };
 
         try {
             const response = await fetch(
-                "https://api.themoviedb.org/3/authentication/session/new",
+                "https://api.themoviedb.org/3/authentication/token/new",
                 options
             );
-
-            if (response.ok) {
-                const donneesJson = await response.json();
-                return donneesJson.results;
-            } else {
-                // Gérer les réponses d'erreur de l'API
+            if (!response.ok) {
                 throw new Error(
-                    "Failed to create account: " + response.statusText
+                    `Failed to fetch data with status ${response.status}`
                 );
             }
-        } catch (erreur) {
-            console.error(
-                "Erreur lors du chargement des données (creationDeCompte fetch)",
-                erreur
-            );
-            return [];
+            const jsonData = await response.json();
+            const requestToken = jsonData.request_token;
+            document.querySelector(".text-info-creation").textContent =
+                "Jeton: " + requestToken;
+            return requestToken;
+        } catch (error) {
+            console.error("Error fetching data: ", error.message);
+            return null;
         }
     }
 
     document
-        .querySelector(".creer-un-compte")
-        .addEventListener("click", function (event) {
+        .querySelector(".obtenir-jeton")
+        .addEventListener("click", async event => {
             event.preventDefault();
-            postDonnesCompte();
+            const requestToken = await fetchRequestToken();
+            if (requestToken) {
+                window.open(
+                    `https://www.themoviedb.org/authenticate/${requestToken}`,
+                    "_blank"
+                );
+            } else {
+                console.error("Failed to retrieve the request token.");
+            }
         });
 
-    new obtenirJetonDAcces();
+    async function fetchCreatSession() {
+        const jeton = document.querySelector(".user-box input").value;
+        const utilisateur = {
+            request_token: jeton,
+        };
+        const options = {
+            method: "POST",
+            headers: {
+                accept: "application/json",
+                "content-type": "application/json",
+                Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(utilisateur),
+        };
+        try {
+            const reponse = await fetch(
+                "https://api.themoviedb.org/3/authentication/session/new",
+                options
+            );
+            if (reponse.ok) {
+                const jsonData = await reponse.json();
+                console.log("Compte créé avec succès:", jsonData);
+
+                const sessionID = jsonData.session_id;
+                document.querySelector(".text-info-creation").textContent =
+                    "Compte créer avec succés, voici votre id de connexion :  " +
+                    sessionID;
+
+                return jsonData.session_id;
+            } else {
+                throw new Error(
+                    `Échec de la création du compte avec le statut ${reponse.status}`
+                );
+            }
+        } catch (erreur) {
+            console.error("Erreur lors du chargement des données", erreur);
+            return null;
+        }
+    }
+
+    document.querySelector(".creer-un-compte").addEventListener("click", () => {
+        fetchCreatSession();
+    });
 }
 // autocompletion // barre de recherche !!!!!!!!!!!!!!!!!
 class rechercheAutoCompletion {
