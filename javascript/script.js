@@ -4,7 +4,6 @@
 const url = window.location;
 const token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZTg2NzAxNjk2NThhZTk3ZDY5OTBjYzhjYzQwZDU0YSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bqPMIPnQxZ_TZREm_GNHPOwRkHflMBDpuVFDFTmteUU";
-
 // Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if (url.pathname.includes("films.html")) {
@@ -165,6 +164,7 @@ if (url.pathname.includes("films.html")) {
         mettreAJourPagination();
     });
 }
+
 // Page series  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if (url.pathname.includes("series.html")) {
@@ -511,7 +511,143 @@ class rechercheAutoCompletion {
         </a>`;
     }
 }
+class PageManager {
+    constructor() {
+        this.header = document.querySelector(".header");
+        this.footer = document.querySelector(".footer");
+        this.buttonBackToTop = document.querySelector(".back-to-top"); // S'assurer que ce sélecteur correspond à un élément dans votre HTML
+        this.headerContent();
+        this.footerContent();
+        this.setupBackToTopButton();
+        this.addScrollListener();
+    }
+
+    headerContent() {
+        const headerContent = `<nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html"><img class="logo-du-site" alt="logo" src="assets/images/lunettes.png">  Cinétech</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 liens-navbar">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="films.html">Films</a></li>
+                        <li class="nav-item"><a class="nav-link" href="series.html">Series</a></li>
+                        <li class="nav-item"><a class="nav-link" href="connexion.html">Connexion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="inscription.html">Inscription</a></li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <div class="inputbox">
+                            <input type="text" required="required" id="recherche" />
+                            <span>Recherche</span>
+                            <i></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>`;
+        this.header.innerHTML = headerContent;
+    }
+    footerContent() {
+        const footerContent = `<!-- Grid container -->
+        <div class="container p-4">
+            <!--Grid row-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <div class="titleFooter">
+                        <p class="cine-footer">Ciné</p>
+                        <p class="tech-footer">tech</p>
+                    </div>
+
+                    <p class="text-footer">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing
+                        elit. Iste atque ea quis molestias. Fugiat pariatur
+                        maxime quis culpa corporis vitae repudiandae aliquam
+                        voluptatem veniam, est atque cumque eum delectus
+                        sint!
+                    </p>
+                </div>
+
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-6 mb-4 mb-md-6">
+                    <h5 class="text-body mb-0">Redirection</h5>
+
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="connexion.html" class="text-body"
+                                >Connexion</a
+                            >
+                        </li>
+                        <li>
+                            <a href="inscription.html" class="text-body"
+                                >Inscription</a
+                            >
+                        </li>
+
+                        <li>
+                            <a href="films.html" class="text-body">Films</a>
+                        </li>
+                        <li>
+                            <a href="series.html" class="text-body"
+                                >Series</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div
+            class="text-center p-3"
+            style="background-color: rgba(0, 0, 0, 0.05)"
+        >
+            © 2003 Copyright:
+            <a class="text-body" href="https://mdbootstrap.com/"
+                >Cinétech.com</a
+            >
+        </div>
+        <!-- Copyright -->`;
+        this.footer.innerHTML = footerContent;
+    }
+
+    setupBackToTopButton() {
+        this.buttonBackToTop.innerHTML = `<button id="btn-back-to-top" class=" btn-floating " >
+        <i  
+        class="material-icons icons-arrow-up">keyboard_arrow_up</i>
+        </button>`;
+        const mybutton = document.getElementById("btn-back-to-top");
+        mybutton.style.display = "none"; // Hide initially
+        mybutton.addEventListener("click", () => {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        });
+    }
+
+    addScrollListener() {
+        window.onscroll = () => {
+            if (
+                document.body.scrollTop > 20 ||
+                document.documentElement.scrollTop > 20
+            ) {
+                this.buttonBackToTop.querySelector(
+                    "#btn-back-to-top"
+                ).style.display = "block";
+            } else {
+                this.buttonBackToTop.querySelector(
+                    "#btn-back-to-top"
+                ).style.display = "none";
+            }
+        };
+    }
+}
+
+new PageManager();
 
 new rechercheAutoCompletion();
-
 // FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

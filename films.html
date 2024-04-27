@@ -35,72 +35,7 @@
     </head>
 
     <body>
-        <header>
-            <!-- debut alonzo -->
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Cinétech</a>
-                    <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox" class="toggle">
-                            <div class="bars" id="bar1"></div>
-                            <div class="bars" id="bar2"></div>
-                            <div class="bars" id="bar3"></div>
-                        </label>
-                    </button>
-                    <div
-                        class="collapse navbar-collapse"
-                        id="navbarSupportedContent"
-                    >
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html"
-                                    >Accueil</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="films.html">Films</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="series.html"
-                                    >Series</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="connexion.html"
-                                    >Connexion</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="inscription.html"
-                                    >Inscription</a
-                                >
-                            </li>
-                        </ul>
-                        <form class="d-flex" role="search">
-                            <div class="inputbox">
-                                <input
-                                    type="text"
-                                    required="required"
-                                    id="recherche"
-                                />
-                                <span>Recherche</span>
-                                <i></i>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-            <!-- FIN ALONZO -->
-        </header>
+        <header class="header"></header>
         <main>
             <section class="main">
                 <section class="categories">
@@ -149,7 +84,7 @@
                     </div>
                 </section>
             </section>
-            <nav aria-label="Navigation de page exemple">
+            <nav>
                 <ul
                     class="pagination position-absolute start-50 translate-middle pb-5"
                 >
@@ -182,7 +117,9 @@
                     </li>
                 </ul>
             </nav>
+            <div class="back-to-top"></div>
         </main>
-        <footer></footer>
+        <!-- Footer -->
+        <footer class="bg-body-tertiary footer"></footer>
     </body>
 </html>

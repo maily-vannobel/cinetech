@@ -8,11 +8,37 @@ body {
     background-color: #0d1b2a !important;
     overflow-x: hidden;
 }
+body::-webkit-scrollbar {
+    width: 15px;
+}
+body::-webkit-scrollbar-track {
+    background: #415a77;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #1b263b;
+    border-radius: 1px;
+    cursor: pointer;
+}
+.logo-du-site {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 5px;
+}
+.liens-navbar {
+    display: flex !important;
+    justify-content: center !important;
+}
 /*debut films et series !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 .main {
     margin: 30px;
 }
-
+.btn-primary {
+    background-color: #1b263b !important;
+    border-color: #1b263b !important;
+}
+.active {
+    background-color: #415a77 !important;
+}
 .titre-de-page {
     color: white;
     text-align: center;
@@ -35,13 +61,7 @@ body {
         gap: 15px;
     }
 }
-.btn-categorie {
-    background-color: #1b263b !important;
-    color: white !important;
-}
-.btn-categorie:hover {
-    background-color: #141d2c !important;
-}
+
 .films-container {
     margin-top: 30px;
 }
@@ -69,6 +89,7 @@ img {
 .card:hover {
     box-shadow: 0px 0px 10px 5px #778da9;
 }
+
 .img-fluid {
     margin-top: 10px;
     border-radius: 5px;
@@ -101,9 +122,6 @@ img {
 }
 .notes-img {
     text-align: center;
-}
-.bouton-categorie-active {
-    border: 1px solid white !important;
 }
 /* fin films et series !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 /* debut connexion et inscription !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
@@ -330,4 +348,24 @@ img {
     text-align: center;
 }
 /*fin connexion inscription !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+/* button back to top */
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #778da9;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    z-index: 1000;
+}
+.pagination {
+    margin-top: 15px;
+}
+
 /* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
