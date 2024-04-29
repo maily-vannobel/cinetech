@@ -70,6 +70,9 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     gap: 15px;
 }
+.card {
+    max-width: 450px !important;
+}
 .series-container {
     margin-top: 30px;
 }
@@ -78,6 +81,19 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     gap: 15px;
 }
+
+@media (max-width: 970px) {
+    .card {
+        flex: 1 1 40% !important ; /* À des résolutions inférieures, la carte prendra jusqu'à 45% */
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        flex: 1 1 100% !important; /* À des résolutions encore inférieures, la carte prendra 100% */
+    }
+}
+
 img {
     user-select: none;
 }
@@ -101,6 +117,7 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     user-select: text;
+    font-size: 1em;
 }
 .page-link {
     background-color: #1b263b !important;

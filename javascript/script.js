@@ -32,7 +32,7 @@ if (url.pathname.includes("films.html")) {
             );
 
             const data = await reponse.json();
-            // console.log(data);
+            console.log(data);
             return data.results;
         } catch (erreur) {
             console.error("Erreur lors du chargement du json", erreur);
@@ -46,24 +46,27 @@ if (url.pathname.includes("films.html")) {
         );
         const films = document.querySelector(".films-cards");
         let contenuHTML = "";
-        for (let i = 0; i < filmsResultat.length; i++) {
+        filmsResultat.forEach(film => {
+            const imgPath =
+                window.innerWidth >= 768
+                    ? film.poster_path
+                    : film.backdrop_path;
             contenuHTML += `
-            <a class="card mb-3 lienCard" style="max-width: 450px; " href="details.html?id=${filmsResultat[i].id}" target="_blank" >
+            <a class="card mb-3 lienCard" href="details.html?id=${film.id}" target="_blank" >
                 <div class="row g-0">
                     <div class="col-md-4 notes-img">
-                        <img src="https://image.tmdb.org/t/p/w500/${filmsResultat[i].poster_path}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
-                        <small class="notes">Notes : ${filmsResultat[i].vote_average}</small>
-                        </div>
+                        <img src="https://image.tmdb.org/t/p/w500/${imgPath}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
+                        <small class="notes">Notes : ${film.vote_average}</small>
+                    </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">${filmsResultat[i].title}</h5>
-                            <p class="card-text description">Description : ${filmsResultat[i].overview}</p>
-                            
+                            <h5 class="card-title">${film.title}</h5>
+                            <p class="card-text description">Description : ${film.overview}</p>
                         </div>
                     </div>
                 </div>
             </a>`;
-        }
+        });
         films.innerHTML = contenuHTML;
     }
     function mettreAJourPagination() {
@@ -163,6 +166,9 @@ if (url.pathname.includes("films.html")) {
         afficherFilms(categorieCourante, pageActuelle);
         mettreAJourPagination();
     });
+    window.addEventListener("resize", () => {
+        afficherFilms(categorieActuelle, pageActuelle);
+    });
 }
 
 // Page series  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -192,7 +198,7 @@ if (url.pathname.includes("series.html")) {
             );
 
             const data = await reponse.json();
-            // console.log(data);
+            console.log(data);
             return data.results;
         } catch (erreur) {
             console.error("Erreur lors du chargement du json", erreur);
@@ -206,24 +212,27 @@ if (url.pathname.includes("series.html")) {
         );
         const series = document.querySelector(".series-cards");
         let contenuHTML = "";
-        for (let i = 0; i < seriesResultat.length; i++) {
+        seriesResultat.forEach(serie => {
+            const imgPath =
+                window.innerWidth >= 768
+                    ? serie.poster_path
+                    : serie.backdrop_path;
             contenuHTML += `
             <div class="card mb-3" style="max-width: 450px;">
                 <div class="row g-0">
-                    <div class="col-md-4 notes-img" data-tv-id="${seriesResultat[i].id}">
-                        <img src="https://image.tmdb.org/t/p/w500/${seriesResultat[i].poster_path}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
-                        <small class="notes">Notes : ${seriesResultat[i].vote_average}</small>
-                        </div>
+                    <div class="col-md-4 notes-img" data-tv-id="${serie.id}">
+                        <img src="https://image.tmdb.org/t/p/w500/${imgPath}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
+                        <small class="notes">Notes : ${serie.vote_average}</small>
+                    </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">${seriesResultat[i].name}</h5>
-                            <p class="card-text description">Description : ${seriesResultat[i].overview}</p>
-                            
+                            <h5 class="card-title">${serie.name}</h5>
+                            <p class="card-text description">Description : ${serie.overview}</p>
                         </div>
                     </div>
                 </div>
             </div>`;
-        }
+        });
         series.innerHTML = contenuHTML;
     }
     function mettreAJourPagination() {
@@ -324,6 +333,9 @@ if (url.pathname.includes("series.html")) {
     });
 
     mettreAJourPagination();
+    window.addEventListener("resize", () => {
+        afficherSeries(categorieActuelle, pageActuelle);
+    });
 }
 if (url.pathname.includes("inscription.html")) {
     async function fetchRequestToken() {
@@ -494,11 +506,15 @@ class rechercheAutoCompletion {
 
     // Méthode pour générer le HTML pour une carte de résultat
     genererCarteHTML(resultat, titre) {
+        const imgPath =
+            window.innerWidth >= 768
+                ? resultat.poster_path
+                : resultat.backdrop_path;
         return `
         <a class="card mb-3 lienCard" style="max-width: 450px;" href="details.html?id=${resultat.id}" target="_blank">
             <div class="row g-0">
                 <div class="col-md-4 notes-img">
-                    <img src="https://image.tmdb.org/t/p/w500/${resultat.poster_path}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
+                    <img src="https://image.tmdb.org/t/p/w500/${imgPath}" class="img-fluid rounded-start images-cartes" alt="image promotionnelle">
                     <small class="notes">Notes : ${resultat.vote_average}</small>
                 </div>
                 <div class="col-md-8">
