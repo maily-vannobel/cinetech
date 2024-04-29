@@ -34,8 +34,17 @@ body {
 }
 
 .container {
-  margin-top: 10px; /* Ajoutez un espacement entre les boutons et les conteneurs */
+  margin-top: 10px;
 }
 h1 {
   color: white;
+}
+.card-text {
+  background-color: #1b263b;
+  color: white;
+  display: none;
+  margin-top: 9px;
+}
+.card:hover .card-text {
+  display: block;
 }

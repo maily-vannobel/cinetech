@@ -16,7 +16,7 @@ async function favorisFilm() {
 
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/account/21229436/favorite/movies?language=en-US&page=1&sort_by=created_at.asc",
+      "https://api.themoviedb.org/3/account/21229436/favorite/movies?language=fr-FR&page=1&sort_by=created_at.asc",
       options
     );
     const data = await response.json();
@@ -48,7 +48,7 @@ async function favorisSerie() {
 
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/account/21229436/favorite/tv?language=en-US&page=1&sort_by=created_at.asc",
+      "https://api.themoviedb.org/3/account/21229436/favorite/tv?language=fr-FR&page=1&sort_by=created_at.asc",
       options
     );
     const data = await response.json();
@@ -70,12 +70,15 @@ async function afficheSerieFav() {
 }
 
 function creaCard(data) {
-  const { title, name, poster_path } = data;
+  const { title, name, poster_path, overview } = data;
   const mediaTitle = title || name;
+  const overviewPreview = overview ? overview.slice(0, 40) + "..." : "";
   return `
-  <div class="card ">
+  <div class="card bg-transparent" >
   <img class="img-fluid w-20" alt="${mediaTitle}" src="https://image.tmdb.org/t/p/w500${poster_path}">
-</div>
+  <div class="card-text">${overviewPreview}
+  </div>
+  </div>
     `;
 }
 
