@@ -1,0 +1,135 @@
+.navbar {
+    background-color: #1b263b;
+}
+.navbar-brand {
+    color: #415a77 !important;
+}
+.nav-link {
+    color: white !important;
+    border-radius: 10px;
+}
+.nav-link:hover {
+    background-color: #0d1b2a;
+}
+.navbar-toggler {
+    background-color: #415a77 !important;
+}
+/*barre de recherche */
+.inputbox {
+    position: relative;
+    width: 196px;
+}
+.recherche {
+    position: absolute;
+    right: 1vw;
+    top: 11vh;
+    width: 15vw;
+    height: 350px;
+    z-index: 5;
+    overflow: hidden;
+    color: white;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+.resultatContainer {
+    background-color: #1b263b;
+}
+.lienCard {
+    text-decoration: none;
+}
+.inputbox input {
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    color: #23242a;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    z-index: 10;
+}
+
+.inputbox span {
+    position: absolute;
+    left: 0;
+    padding: 20px 10px 10px;
+    font-size: 1em;
+    color: #8f8f8f;
+    letter-spacing: 00.05em;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.inputbox input:valid ~ span,
+.inputbox input:focus ~ span {
+    color: #5748f2;
+    transform: translateX(-10px) translateY(-28px);
+    font-size: 0, 75em;
+}
+
+.inputbox i {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #5748f2;
+    border-radius: 4px;
+    transition: 0.5s;
+    pointer-events: none;
+    z-index: 9;
+}
+
+.inputbox input:valid ~ i,
+.inputbox input:focus ~ i {
+    height: 38px;
+}
+
+footer {
+    position: relative;
+    background-image: url("../assets/images/star-wars-footer2.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 60px;
+    color: white;
+}
+.background-footer {
+    width: 100vw;
+    height: auto;
+    margin-top: 50px;
+}
+.titleFooter {
+    display: flex !important;
+}
+.cine-footer {
+    text-shadow: 0 0 5px #fff, 0 0 30px #ff0000,
+        2px 2px 2px rgba(206, 89, 55, 0);
+    color: #ffffff;
+    font-size: 2.5em;
+}
+.tech-footer {
+    text-shadow: 0 0 5px #fff, 0 0 30px #0400ff,
+        2px 2px 2px rgba(206, 89, 55, 0);
+    color: #ffffff;
+    font-size: 2.5em;
+}
+.text-footer {
+    color: white;
+}
+.text-body {
+    text-decoration: none;
+}
+.logo-du-site {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 5px;
+}
+.liens-navbar {
+    display: flex !important;
+    justify-content: center !important;
+}

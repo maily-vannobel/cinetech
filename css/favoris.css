@@ -1,0 +1,50 @@
+.filmContainer {
+    display: flex;
+}
+.serieContainer {
+    display: flex;
+}
+.card img {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.card {
+    height: auto;
+    width: 200px;
+}
+.card img:hover {
+    transform: scale(1.1);
+    overflow: visible;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.favoris {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    margin-top: 10px;
+}
+h1 {
+    color: white;
+}
+.card-text {
+    background-color: #1b263b;
+    color: white;
+    display: none;
+    margin-top: 9px;
+}
+.card:hover .card-text {
+    display: block;
+}

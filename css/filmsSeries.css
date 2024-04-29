@@ -1,0 +1,165 @@
+/* DEBUT ALONZO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/*general*/
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #0d1b2a !important;
+    overflow-x: hidden;
+}
+body::-webkit-scrollbar {
+    width: 15px;
+}
+body::-webkit-scrollbar-track {
+    background: #415a77;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #1b263b;
+    border-radius: 1px;
+    cursor: pointer;
+}
+.logo-du-site {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 5px;
+}
+.liens-navbar {
+    display: flex !important;
+    justify-content: center !important;
+}
+/*debut films et series !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+.main {
+    margin: 30px;
+}
+.btn-primary {
+    background-color: #1b263b !important;
+    border-color: #1b263b !important;
+}
+.active {
+    background-color: #415a77 !important;
+}
+.titre-de-page {
+    color: white;
+    text-align: center;
+}
+
+.resultatContainer {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 15px !important;
+}
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+@media screen and (max-width: 500px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column !important;
+        gap: 15px;
+    }
+}
+
+.films-container {
+    margin-top: 30px;
+}
+.films-cards {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.card {
+    max-width: 450px !important;
+}
+.series-container {
+    margin-top: 30px;
+}
+.series-cards {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+@media (max-width: 970px) {
+    .card {
+        flex: 1 1 40% !important ; /* À des résolutions inférieures, la carte prendra jusqu'à 45% */
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        flex: 1 1 100% !important; /* À des résolutions encore inférieures, la carte prendra 100% */
+    }
+}
+
+img {
+    user-select: none;
+}
+.card {
+    background-color: #1b263b !important;
+    color: white !important;
+    cursor: pointer;
+    text-decoration: none;
+}
+.card:hover {
+    box-shadow: 0px 0px 10px 5px #778da9;
+}
+
+.img-fluid {
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: text;
+    font-size: 1em;
+}
+.page-link {
+    background-color: #1b263b !important;
+    border-color: #141d2c !important;
+}
+.page-link:hover {
+    background-color: #415a77 !important;
+}
+#page-deux {
+    background-color: #141d2c !important;
+}
+.lienCard {
+    text-decoration: none;
+    user-select: none;
+}
+.notes {
+    font: optional;
+    color: rgba(163, 163, 163, 0.768);
+}
+.notes-img {
+    text-align: center;
+}
+/* fin films et series !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+/* button back to top */
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #778da9;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    z-index: 1000;
+}
+.pagination {
+    margin-top: 15px;
+}
+
+/* FIN ALONZO   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */

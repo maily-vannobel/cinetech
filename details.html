@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/details.css" />
+        <link rel="stylesheet" href="css/filmsSeries.css" />
+        <link rel="stylesheet" href="css/headerFooter.css" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <title>Cinetech</title>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+        ></script>
+        <script defer src="javascript/script.js"></script>
+    </head>
+
+    <body>
+        <header class="header"></header>
+        <section class="recherche">
+            <div class="resultatContainer row"></div>
+        </section>
+        <h1>Détails</h1>
+        <main class="container">
+            <section id="movieSection">
+                <!-- SECTION DES FILMS -->
+
+                <h1 id="movieTitle" class="movieTitle text-white"></h1>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img
+                                id="moviePoster"
+                                src=""
+                                alt="Movie Poster"
+                                class="moviePoster"
+                            />
+                        </div>
+                        <div class="col-md-4">
+                            <p id="movieOverview" class="text-white"></p>
+                        </div>
+                        <div class="col-md-4 bg-grey2 text-white">
+                            <p>
+                                <strong>Date de sortie :</strong>
+                                <span id="movieReleaseDate"></span>
+                            </p>
+                            <p>
+                                <strong>Durée :</strong>
+                                <span id="movieRuntime"></span>min
+                            </p>
+                            <p>
+                                <strong>Statut :</strong>
+                                <span id="movieStatus"></span>
+                            </p>
+                            <p>
+                                <strong>Pays :</strong>
+                                <span id="movieCountry"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <p id=""></p>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+
+                <div id="movieImages"></div>
+
+                <div id="movieVote"></div>
+
+                <form id="ratingForm">
+                    <label for="ratingInput">Entrez la note du film :</label>
+                    <input
+                        type="number"
+                        id="ratingInput"
+                        name="rating"
+                        min="1"
+                        max="10"
+                        required
+                    />
+                    <button type="submit">Soumettre</button>
+                </form>
+
+                <div class="rating">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text"></label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text"></label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text"></label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text"></label>
+                    <input
+                        checked=""
+                        type="radio"
+                        id="star1"
+                        name="rate"
+                        value="1"
+                    />
+                    <label for="star1" title="text"></label>
+                </div>
+
+                <div class="text-white">
+                    <b>Commentaires</b> <span id="movieReview"> </span>
+                </div>
+            </section>
+
+            <section id="tvSection">
+                <!-- SECTION DES SERIES -->
+                <h1 id="tvTitle" class="tvTitle text-white"></h1>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img
+                                id="tvPoster"
+                                src=""
+                                alt="TV Poster"
+                                class="tvPoster"
+                            />
+                        </div>
+
+                        <div class="col-md-4">
+                            <p id="tvOverview" class="text-white"></p>
+                        </div>
+                        <div class="col-md-4 bg-grey2 text-white">
+                            <p>
+                                <strong>Date de sortie :</strong>
+                                <span id="tvReleaseDate"></span>
+                            </p>
+                            <p>
+                                <strong>Statut :</strong>
+                                <span id="tvStatus"></span>
+                            </p>
+                            <p>
+                                <strong>Durée d'un épisode:</strong>
+                                <span id="TvRuntime"></span>min
+                            </p>
+                            <p>
+                                <strong>Pays :</strong>
+                                <span id="tvCountry"></span>
+                            </p>
+                            <p>
+                                <strong>Note :</strong>
+                                <span id="tvVoteAverage"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-white">
+                    <b>Commentaires</b>
+                    <span id="tvReviews"></span>
+                </div>
+                <div id="tvSeasons"></div>
+                <div id="seasonsContainer"></div>
+            </section>
+            <div class="back-to-top"></div>
+        </main>
+
+        <footer class="footer"></footer>
+    </body>
+</html>

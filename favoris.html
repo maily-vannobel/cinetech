@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/favoris.css" />
+        <link rel="stylesheet" href="css/headerFooter.css" />
+
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+
+        <title>Favoris</title>
+    </head>
+    <body style="background-color: #1b263b">
+        <header class="header"></header>
+        <main>
+            <section class="recherche">
+                <div class="resultatContainer row"></div>
+            </section>
+            <section class="favoris">
+                <h1>Liste des favoris</h1>
+                <div class="button-container">
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-lg btnFilm"
+                    >
+                        FILMS
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-lg btnSerie"
+                    >
+                        SERIES
+                    </button>
+                </div>
+            </section>
+
+            <div class="container filmContainer"></div>
+            <div class="container serieContainer"></div>
+        </main>
+
+        <footer class="footer"></footer>
+        <script src="javascript/script.js"></script>
+    </body>
+</html>
