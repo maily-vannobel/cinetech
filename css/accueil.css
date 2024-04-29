@@ -1,20 +1,23 @@
 .card {
-  height: 100%;
+  min-height: 100%;
 }
+
 .card img {
   width: 100%; /* Pour assurer que l'image remplit entièrement la zone de la carte */
   height: 80%; /* Pour maintenir le ratio hauteur/largeur de l'image */
   border-radius: 8px; /* Ajoute des coins arrondis à l'image */
   object-fit: cover; /* Pour redimensionner l'image tout en conservant ses proportions et en remplissant son conteneur */
 }
+
 .card-title {
+  color: white !important;
   font-size: 15px;
-  color: white;
 }
 
 h3 {
   color: white;
 }
+
 .card-text {
   color: rgba(163, 163, 163, 0.768);
   font-size: 15px;

@@ -1,11 +1,7 @@
 const apiKey =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMzAzNjg0OGQ1YWQ3YWIwZTZhYjcyNzA1MjFlOWM2NSIsInN1YiI6IjY2Mjc0OTJhMDdmYWEyMDE0OTk4YmY3OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Reavry7pTo66xr_7SiYMxtIkyoS8RXEikzP2MErg7hY";
-const filmsContainer = document.querySelector(
-  "#carouselExampleIndicators1 .carousel-inner"
-);
-const seriesContainer = document.querySelector(
-  "#carouselExampleIndicators2 .carousel-inner"
-);
+const filmsContainer = document.querySelector("#carouselFilms");
+const seriesContainer = document.querySelector("#carouselSeries");
 
 async function filmAccueil() {
   const options = {
@@ -112,7 +108,7 @@ async function seriesAffiche() {
 
 function createCard(data) {
   const { title, name, vote_average, poster_path } = data;
-  const mediaTitle = title || name; // utilise le titre du film ou de la série en fonction de la propriété existante
+  const mediaTitle = title || name;
 
   return `
     <div class="col-md-4 mb-3">
