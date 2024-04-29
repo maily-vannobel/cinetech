@@ -18,7 +18,7 @@ async function filmAccueil() {
 
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&page=1&sort_by=popularity.desc",
       options
     );
 
@@ -69,7 +69,7 @@ async function seriesAccueil() {
 
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/discover/tv?include_null_first_air_dates=false&timezone=America%2FNew_York&with_original_language=en&page=1&sort_by=popularity.desc",
+      "https://api.themoviedb.org/3/tv/popular?language=fr-FR&page=1",
       options
     );
 
@@ -116,9 +116,9 @@ function createCard(data) {
 
   return `
     <div class="col-md-4 mb-3">
-      <div class="card">
+      <div class="card bg-transparent">
         <img class="img-fluid" alt="${mediaTitle}" src="https://image.tmdb.org/t/p/w500${poster_path}">
-        <div class="card-body">
+        <div class="card-body ">
           <h5 class="card-title">${mediaTitle}</h5>
           <small class="card-text">Note : ${vote_average}</small>
         </div>
