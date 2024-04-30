@@ -15,9 +15,9 @@ const apiKey = "ae8670169658ae97d6990cc8cc40d54a";
 const urlParams = new URLSearchParams(window.location.search);
 const movieId = urlParams.get("movie_id");
 const tvId = urlParams.get("tv_id");
+const seasonNumber = 30;
 const url = window.location;
-const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZTg2NzAxNjk2NThhZTk3ZDY5OTBjYzhjYzQwZDU0YSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bqPMIPnQxZ_TZREm_GNHPOwRkHflMBDpuVFDFTmteUU";
+const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZTg2NzAxNjk2NThhZTk3ZDY5OTBjYzhjYzQwZDU0YSIsInN1YiI6IjY2MjYxYThhZTg5NGE2MDE3ZDNjMzRjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bqPMIPnQxZ_TZREm_GNHPOwRkHflMBDpuVFDFTmteUU";
 // Page films   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if (url.pathname.includes("films.html")) {
@@ -46,7 +46,6 @@ if (url.pathname.includes("films.html")) {
             );
 
             const data = await reponse.json();
-            console.log(data);
             return data.results;
         } catch (erreur) {
             console.error("Erreur lors du chargement du json", erreur);
@@ -702,7 +701,6 @@ if (url.pathname.includes("details.html")) {
         }
     }
 
-    // AFFICHER DETAILS DU FILMS SUR LA PAGE
     async function displayMovieDetails() {
         if (movieId) {
             // Récupère les détails du film
@@ -848,10 +846,7 @@ if (url.pathname.includes("details.html")) {
             return null;
         }
     }
-
-    document
-        .getElementById("ratingForm")
-        .addEventListener("submit", async function (event) {
+    document.getElementById("ratingForm").addEventListener("submit", async function (event) {
             event.preventDefault();
             // Récup la note saisie par l'utilisateur
             const ratingInput = document.getElementById("ratingInput").value;
@@ -900,6 +895,8 @@ if (url.pathname.includes("details.html")) {
                 const tvCountryElement = document.getElementById("tvCountry");
                 // const tvRuntimeElement = document.getElementById('tvRuntime')
                 const tvPoster = document.getElementById("tvPoster");
+                const tvVoteAverage = document.getElementById("tvVoteAverage");
+                const tvVoteCount = document.getElementById("tvVoteCount");
 
                 // Affiche les détails de la série TV sur la page
                 tvTitleElement.textContent = tvDetails.name;
@@ -909,6 +906,8 @@ if (url.pathname.includes("details.html")) {
                 tvCountryElement.textContent = tvDetails.origin_country;
                 // tvRuntimeElement.textContent = tvDetails.episode_run_time
                 tvPoster.src = `https://image.tmdb.org/t/p/original${tvDetails.poster_path}`;
+                tvVoteAverage.textContent = tvDetails.vote_average;
+                tvVoteCount.textContent = tvDetails.vote_count;
 
                 console.log(tvDetails);
             } else {
@@ -961,9 +960,9 @@ if (url.pathname.includes("details.html")) {
         }
     }
 
-    async function getTvSeason(tvId, seasonNumber) {
+    async function getTvSeasons(tvId, seasonNumber) {
         const apiUrl = `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}?api_key=${apiKey}&language=fr`;
-
+    
         try {
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -981,60 +980,29 @@ if (url.pathname.includes("details.html")) {
             return null;
         }
     }
-
-    async function getTvSeasons(tvId) {
-        const apiUrl = `https://api.themoviedb.org/3/tv/${tvId}/season/1?api_key=${apiKey}&language=fr`;
-
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                throw new Error(
-                    "Échec de la récupération des saisons de la série TV"
-                );
-            }
-            const data = await response.json();
-            const totalSeasons = data.number_of_seasons;
-            const seasons = [];
-
-            for (let i = 1; i <= totalSeasons; i++) {
-                const seasonUrl = `https://api.themoviedb.org/3/tv/${tvId}/season/${i}?api_key=${apiKey}&language=fr`;
-                const seasonResponse = await fetch(seasonUrl);
-                if (!seasonResponse.ok) {
-                    throw new Error(
-                        `Échec de la récupération de la saison ${i} de la série TV`
-                    );
-                }
-                const seasonData = await seasonResponse.json();
-                seasons.push(seasonData);
-            }
-
-            return seasons;
-        } catch (error) {
-            console.error(
-                "Erreur lors de la récupération des saisons de la série TV :",
-                error
-            );
-            return null;
-        }
-    }
-
-    async function displayTvSeasons(tvId, seasonsNumber) {
+    async function displayTvSeasons(tvId, seasonNumber) {
         const seasonsContainer = document.getElementById("tvSeasons");
-
-        if (seasons && seasons.length > 0) {
-            seasons.forEach(season => {
+    
+        try {
+            const seasonDetails = await getTvSeasons(tvId, seasonNumber);
+            if (seasonDetails) {
                 const seasonElement = document.createElement("div");
                 seasonElement.classList.add("season");
                 seasonElement.innerHTML = `
-        <h3>Saison ${season.season_number}</h3>
-        <p>Date de diffusion : ${season.air_date}</p>
-        <p>Nombre d'épisodes : ${season.episode_count}</p>
-        <p>Résumé : ${season.overview}</p>
-      `;
+                    <h3>Saison ${seasonDetails.season_number}</h3>
+                    <p>Date de diffusion : ${seasonDetails.air_date}</p>
+                    <p>Nombre d'épisodes : ${seasonDetails.episode_count}</p>
+                    <p>Résumé : ${seasonDetails.overview}</p>`;
                 seasonsContainer.appendChild(seasonElement);
-            });
-        } else {
-            seasonsContainer.innerHTML = "<p>Aucune saison trouvée.</p>";
+                console.log (seasonDetails)
+            } else {
+                console.error("Détails de la saison non trouvés");
+            }
+        } catch (error) {
+            console.error(
+                "Erreur lors de l'affichage des détails de la saison de la série TV :",
+                error
+            );
         }
     }
     async function getTvSeasonDetails(tvId, seasonNumber) {
@@ -1057,50 +1025,179 @@ if (url.pathname.includes("details.html")) {
             return null;
         }
     }
-    async function displayTvSeasonDetails(tvId, seasonNumber) {
-        // Récupère les détails de la série TV pour obtenir le nombre de saisons
+    async function displayTvSeasonDetails(tvId) {
         const tvDetails = await getTvDetails(tvId);
-
+      
         if (tvDetails && tvDetails.number_of_seasons) {
-            // Obtient le nombre total de saisons de la série TV
-            const numberOfSeasons = tvDetails.number_of_seasons;
+          // Obtient le nombre total de saisons de la série TV
+          const numberOfSeasons = tvDetails.number_of_seasons;
+      
+          const seasonsContainer = document.getElementById("tvSeasonsDetails"); // Obtient l'élément où afficher les détails des saisons
+          seasonsContainer.innerHTML = ""; // Vide le conteneur des détails des saisons précédentes
+      
+          //conteneur pour les saisons
+          const seasonsAccordion = document.createElement("div");
+          seasonsAccordion.setAttribute("id", "tvSeasonsAccordion");
+          seasonsContainer.appendChild(seasonsAccordion);
+      
+          // Appelle la fonction pour récupérer les détails de chaque saison de la série TV
+          for (let i = 1; i <= numberOfSeasons; i++) {
+            try {
+              const seasonDetails = await getTvSeasonDetails(tvId, i); // Récupère les détails de la saison actuelle
+              if (seasonDetails) {
+                // Crée un élément pour la saison dans l'accordéon
+                const seasonItem = document.createElement("div");
+                seasonItem.classList.add("accordion-item");
+                seasonsAccordion.appendChild(seasonItem);
+      
+                const seasonHeader = document.createElement("h2");
+                seasonHeader.classList.add("accordion-header");
+                seasonItem.appendChild(seasonHeader);
+      
+                const seasonButton = document.createElement("button");
+                seasonButton.classList.add("accordion-button", "collapsed");
+                seasonButton.setAttribute("type", "button");
+                seasonButton.setAttribute("data-bs-toggle", "collapse");
+                seasonButton.setAttribute("data-bs-target", `#season${i}`);
+                seasonButton.innerHTML = `Saison ${i}`;
+                seasonHeader.appendChild(seasonButton);
+      
+                // Crée un conteneur pour les épisodes de la saison
+                const seasonCollapse = document.createElement("div");
+                seasonCollapse.setAttribute("id", `season${i}`);
+                seasonCollapse.classList.add("accordion-collapse", "collapse");
+                seasonCollapse.setAttribute("data-bs-parent", "#tvSeasonsAccordion");
+                seasonItem.appendChild(seasonCollapse);
+      
+                const seasonBody = document.createElement("div");
+                seasonBody.classList.add("accordion-body");
+                seasonCollapse.appendChild(seasonBody);
+      
+                // Ajoute les épisodes de la saison à l'élément seasonBody
+                const episodesContainer = document.createElement("div");
+                seasonBody.appendChild(episodesContainer);
+      
+                // Crée un accordéon pour les épisodes de la saison
+                const episodeAccordion = document.createElement("div");
+                episodeAccordion.classList.add("accordion", "accordion-flush");
+                episodesContainer.appendChild(episodeAccordion);
+      
+                seasonDetails.episodes.forEach(episode => {
+                  const episodeItem = document.createElement("div");
+                  episodeItem.classList.add("episode-item");
+      
+                  const episodeHeader = document.createElement("h2");
+                  episodeHeader.classList.add("episode-header");
+                  episodeItem.appendChild(episodeHeader);
+      
+                  const episodeButton = document.createElement("button");
+                  episodeButton.classList.add("episode-button", "collapsed");
+                  episodeButton.setAttribute("type", "button");
+                  episodeButton.setAttribute("data-bs-toggle", "collapse");
+                  episodeButton.setAttribute("data-bs-target", `#episode${episode.id}`);
+                  episodeButton.innerHTML = `Épisode ${episode.episode_number} : ${episode.name}`;
+                  episodeHeader.appendChild(episodeButton);
+                  episodeButton.addEventListener('click', event => {
+                    // Empêche la propagation de l'événement de clic jusqu'à l'accordéon parent
+                    event.stopPropagation();
+                
+                    
+                });
 
-            const seasonsContainer = document.getElementById("tvSeasons"); // Obtient l'élément où afficher les détails des saisons
-            seasonsContainer.innerHTML = ""; // Vide le conteneur des détails des saisons précédentes
 
-            // Appelle la fonction pour récupérer les détails de chaque saison de la série TV
-            for (let i = 1; i <= numberOfSeasons; i++) {
-                try {
-                    const seasonDetails = await getTvSeasonDetails(tvId, i); // Récupère les détails de la saison actuelle
-                    if (seasonDetails) {
-                        const seasonElement = document.createElement("div");
-                        seasonElement.innerHTML = `<p><strong>Saison ${i}</strong></p><p>${seasonDetails.overview}</p>`;
-                        seasonsContainer.appendChild(seasonElement);
-                    } else {
-                        console.error(`Détails de la saison ${i} non trouvés`);
-                    }
-                } catch (error) {
-                    console.error(
-                        `Erreur lors de la récupération des détails de la saison ${i} :`,
-                        error
-                    );
-                }
+                  const episodeCollapse = document.createElement("div");
+                  episodeCollapse.setAttribute("id", `episode${episode.id}`);
+                  episodeCollapse.classList.add("accordion-collapse", "collapse");
+                  episodeCollapse.setAttribute("data-bs-parent", "#tvSeasonsAccordion");
+                  episodeItem.appendChild(episodeCollapse);
+      
+                  const episodeBody = document.createElement("div");
+                  episodeBody.classList.add("episode-body");
+                  episodeCollapse.appendChild(episodeBody);
+      
+                  const episodeOverview = document.createElement("p");
+                  episodeOverview.textContent = episode.overview;
+                  episodeBody.appendChild(episodeOverview);
+      
+                  episodeAccordion.appendChild(episodeItem);
+                });
+              } else {
+                console.error(`Détails de la saison ${i} non trouvés`);
+              }
+            } catch (error) {
+              console.error(
+                `Erreur lors de la récupération des détails de la saison ${i} :`,
+                error
+              );
             }
+          }
         } else {
-            console.error(
-                "Impossible de récupérer le nombre de saisons pour la série TV"
-            );
+          console.error(
+            "Impossible de récupérer le nombre de saisons pour la série TV"
+          );
         }
     }
 
+    async function getTvSimilar(tvId) {
+        const apiUrl = `https://api.themoviedb.org/3/tv/${tvId}/similar?language=en-US&page=1&api_key=${apiKey}`;    
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error("Failed to fetch similar TV series");
+            }
+            const data = await response.json();
+            return data.results;
+        } catch (error) {
+            console.error("Error fetching similar TV series:", error);
+            return null;
+        }
+    }
+    
+    async function displayTvSimilar(tvId) {
+        const similarTvContainer = document.getElementById("similarTvContainer");
+        similarTvContainer.innerHTML = ""; // Clear previous content
+    
+        try {
+            const similarTvSeries = await getTvSimilar(tvId);
+            if (similarTvSeries) {
+                similarTvSeries.forEach(tvSeries => {
+                    const tvSeriesElement = document.createElement("div");
+                    tvSeriesElement.classList.add("tv-series");
+                    
+                    
+                    const titleElement = document.createElement("h3");
+                    titleElement.textContent = tvSeries.name;
+                    tvSeriesElement.appendChild(titleElement);
+    
+
+                    if (tvSeries.poster_path) {
+                        const imageElement = document.createElement("img");
+                        imageElement.src = `https://image.tmdb.org/t/p/w500/${tvSeries.poster_path}`;
+                        imageElement.alt = tvSeries.name;
+                        tvSeriesElement.appendChild(imageElement);
+                    }
+
+    
+    
+                    similarTvContainer.appendChild(tvSeriesElement);
+                });
+            } else {
+                console.error("No similar TV series found");
+            }
+        } catch (error) {
+            console.error("Error displaying similar TV series:", error);
+        }
+    }
+    
     // Appeller fonctions
     document.addEventListener("DOMContentLoaded", async function () {
         await displayMovieDetails();
         await displayTvDetails();
         await displayMovieReview();
         await displayTvReviews(tvId);
-        await displayTvSeason();
+        await displayTvSeasons(tvId);
         await displayTvSeasonDetails(tvId, seasonNumber);
+        await displayTvSimilar(tvId);
     });
     document.addEventListener("DOMContentLoaded", function () {
         // Fonction pour obtenir les paramètres d'URL

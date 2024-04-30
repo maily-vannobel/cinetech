@@ -16,6 +16,8 @@
     background-color: #415a77;
 }
 
+
+
 /* COULEURS PERSO */
 .bg-grey1 {
     background-color: #0d1b2a;
@@ -33,6 +35,61 @@
 .grey5 {
     background-color: #e0e1dd;
 }
+/* Style pour l'accordéon */
+.accordion-item {
+    margin-bottom: 10px;
+  }
+  
+  .accordion-header {
+    background-color: #1b263b; 
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  
+  
+/* Style pour les épisodes */
+  
+  .episode-header {
+    background-color: #415a77; 
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .episode-button {
+    width: 100%;
+    text-align: left;
+    background-color:#415a77 ;
+    color: white;
+  }
+  
+  .episode-body {
+    background-color: #f8f9fa; 
+    padding: 10px;
+    border-radius: 5px;
+    color: #000000; 
+  }
+  /* SERIES SIMILAIRES */
+  .similar-tv-container {
+    display: flex; 
+    overflow-x: auto; 
+    white-space: nowrap; 
+  }
+  
+  .tv-series {
+    flex: 0 0 auto; 
+    margin-right: 20px; 
+  }
+  .tv-series img {
+    max-width: 50%; 
+    height: auto; 
+    display: block; 
+    margin-top: 5px; 
+  }
+  
 
 /* ETOILES NOTATION */
 .rating:not(:checked) > input {

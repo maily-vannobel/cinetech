@@ -44,7 +44,7 @@
         <section class="recherche">
             <div class="resultatContainer row"></div>
         </section>
-        <h1>Détails</h1>
+    
         <main class="container">
             <section id="movieSection">
                 <!-- SECTION DES FILMS -->
@@ -151,7 +151,10 @@
                         <div class="col-md-4">
                             <p id="tvOverview" class="text-white"></p>
                         </div>
-                        <div class="col-md-4 bg-grey2 text-white">
+
+
+                        <div class="col-md-4  text-white">
+                            <div class="bg-grey2">
                             <p>
                                 <strong>Date de sortie :</strong>
                                 <span id="tvReleaseDate"></span>
@@ -168,10 +171,19 @@
                                 <strong>Pays :</strong>
                                 <span id="tvCountry"></span>
                             </p>
+                        </div>
+                        <div class="bg-grey2">
                             <p>
                                 <strong>Note :</strong>
                                 <span id="tvVoteAverage"></span>
+                               </p>
+                            <p>
+                                 <strong>Votes :</strong>
+                                <span id="tvVoteCount"> </span>
                             </p>
+
+                        </div>
+
                         </div>
                     </div>
                 </div>
@@ -180,9 +192,17 @@
                     <b>Commentaires</b>
                     <span id="tvReviews"></span>
                 </div>
-                <div id="tvSeasons"></div>
-                <div id="seasonsContainer"></div>
+<!-- ----------------------------->
+<div id="tvSeasonsDetails" class="text-white bg-grey2">
+    <div id="tvSeasonsAccordion" class="bg-grey4"></div>
+  </div>
+ <!-- ----------------------------->
+  <h2> Séries similaires </h2>
+<div id="similarTvContainer"class="similar-tv-container"> 
+</div>   
+ 
             </section>
+
             <div class="back-to-top"></div>
         </main>
 
