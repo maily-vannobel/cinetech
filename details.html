@@ -53,16 +53,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            <img
-                                id="moviePoster"
-                                src=""
-                                alt="Movie Poster"
-                                class="moviePoster"
-                            />
+                            <img id="moviePoster" src="" alt="Movie Poster" class="moviePoster" />
                         </div>
+        
                         <div class="col-md-4">
                             <p id="movieOverview" class="text-white"></p>
                         </div>
+        
                         <div class="col-md-4 bg-grey2 text-white">
                             <p>
                                 <strong>Date de sortie :</strong>
@@ -80,21 +77,28 @@
                                 <strong>Pays :</strong>
                                 <span id="movieCountry"></span>
                             </p>
+                            <!-- Placer les informations de Vote Average et Vote Count ici -->
+                            <p>
+                                <strong>Note :</strong>
+                                <span id="movieVoteAverage"></span>
+                            </p>
+                            <p>
+                                <strong>Votes :</strong>
+                                <span id="movieVoteCount"></span>
+                            </p>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <p id=""></p>
-                        </div>
-                        <div class="col-md-4"></div>
                     </div>
                 </div>
 
                 <div id="movieImages"></div>
 
-                <div id="movieVote"></div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+
 
                 <form id="ratingForm">
                     <label for="ratingInput">Entrez la note du film :</label>
@@ -131,6 +135,9 @@
                 <div class="text-white">
                     <b>Commentaires</b> <span id="movieReview"> </span>
                 </div>
+
+                <div id="similarMoviesContainer" class="similar-tv-container movie"> </div>
+
             </section>
 
             <section id="tvSection">

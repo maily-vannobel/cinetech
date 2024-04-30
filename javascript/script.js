@@ -721,8 +721,13 @@ if (url.pathname.includes("details.html")) {
                     document.getElementById("movieStatus");
                 const movieCountryElement =
                     document.getElementById("movieCountry");
+
+
                 const movieVoteAverageElement =
-                    document.getElementById("movieVote");
+                    document.getElementById("movieVoteAverage");
+
+                    const movieVoteCountElement =
+                    document.getElementById("movieVoteCount");
 
                 movieTitleElement.textContent = movieDetails.title;
                 movieOverviewElement.textContent = movieDetails.overview;
@@ -732,6 +737,8 @@ if (url.pathname.includes("details.html")) {
                 movieStatusElement.textContent = movieDetails.status;
                 movieCountryElement.textContent = movieDetails.origin_country;
                 movieVoteAverageElement.textContent = movieDetails.vote_average;
+                movieVoteCountElement.textContent = movieDetails.vote_count;
+
             } else {
                 console.error("Détails du film non trouvés");
             }
@@ -822,6 +829,53 @@ if (url.pathname.includes("details.html")) {
             );
         }
     }
+    async function getMovieSimilar(movieId) {
+        const apiUrl = `https://api.themoviedb.org/3/movie/${movieId}/similar?language=en-US&page=1&api_key=${apiKey}`;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error("Failed to fetch similar movies");
+            }
+            const data = await response.json();
+            return data.results;
+        } catch (error) {
+            console.error("Error fetching similar movies:", error);
+            return null;
+        }
+    }
+    
+    async function displayMovieSimilar(movieId) {
+        const similarMoviesContainer = document.getElementById("similarMoviesContainer");
+        similarMoviesContainer.innerHTML = ""; // Clear previous content
+    
+        try {
+            const similarMovies = await getMovieSimilar(movieId);
+            if (similarMovies) {
+                similarMovies.forEach(movie => {
+                    const movieElement = document.createElement("div");
+                    movieElement.classList.add("movie");
+    
+                    const titleElement = document.createElement("h3");
+                    titleElement.textContent = movie.title;
+                    movieElement.appendChild(titleElement);
+    
+                    if (movie.poster_path) {
+                        const imageElement = document.createElement("img");
+                        imageElement.src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+                        imageElement.alt = movie.title;
+                        movieElement.appendChild(imageElement);
+                    }
+    
+                    similarMoviesContainer.appendChild(movieElement);
+                });
+            } else {
+                console.error("Pas de films similaires trouvés");
+            }
+        } catch (error) {
+            console.error("Error displaying similar movies:", error);
+        }
+    }
+
 
     async function addRating(movieId, rating) {
         const options = {
@@ -1194,6 +1248,8 @@ if (url.pathname.includes("details.html")) {
         await displayMovieDetails();
         await displayTvDetails();
         await displayMovieReview();
+        await displayMovieSimilar(movieId);
+
         await displayTvReviews(tvId);
         await displayTvSeasons(tvId);
         await displayTvSeasonDetails(tvId, seasonNumber);

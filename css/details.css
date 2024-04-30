@@ -72,6 +72,21 @@
     border-radius: 5px;
     color: #000000; 
   }
+  
+  .similar-movie-container{
+    display: flex; 
+    overflow-x: auto; 
+    white-space: nowrap; 
+  }
+  #similarMoviesContainer {
+    margin-top: 20px; /* Ajoute une marge de 20 pixels en haut */
+}
+
+  .movie img {
+    width: 200px; /* Largeur souhaitée */
+    height: auto; /* Hauteur automatique pour conserver les proportions */
+}
+
   /* SERIES SIMILAIRES */
   .similar-tv-container {
     display: flex; 
