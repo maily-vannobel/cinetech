@@ -350,7 +350,7 @@ if (url.pathname.includes("series.html")) {
         afficherSeries(categorieActuelle, pageActuelle);
     });
 }
-if (url.pathname.includes("inscription.html")) {
+if (url.pathname.includes("connexion.html")) {
     async function fetchRequestToken() {
         const options = {
             method: "GET",
@@ -1083,115 +1083,89 @@ if (url.pathname.includes("details.html")) {
         const tvDetails = await getTvDetails(tvId);
       
         if (tvDetails && tvDetails.number_of_seasons) {
-          // Obtient le nombre total de saisons de la série TV
           const numberOfSeasons = tvDetails.number_of_seasons;
-      
-          const seasonsContainer = document.getElementById("tvSeasonsDetails"); // Obtient l'élément où afficher les détails des saisons
+          const seasonsContainer = document.getElementById("tvSeasonsDetails");
           seasonsContainer.innerHTML = ""; // Vide le conteneur des détails des saisons précédentes
       
-          //conteneur pour les saisons
           const seasonsAccordion = document.createElement("div");
           seasonsAccordion.setAttribute("id", "tvSeasonsAccordion");
+          seasonsAccordion.classList.add("accordion");
           seasonsContainer.appendChild(seasonsAccordion);
       
-          // Appelle la fonction pour récupérer les détails de chaque saison de la série TV
           for (let i = 1; i <= numberOfSeasons; i++) {
-            try {
-              const seasonDetails = await getTvSeasonDetails(tvId, i); // Récupère les détails de la saison actuelle
-              if (seasonDetails) {
-                // Crée un élément pour la saison dans l'accordéon
-                const seasonItem = document.createElement("div");
-                seasonItem.classList.add("accordion-item");
-                seasonsAccordion.appendChild(seasonItem);
+            const seasonDetails = await getTvSeasonDetails(tvId, i);
+            if (seasonDetails) {
+              const seasonItem = document.createElement("div");
+              seasonItem.classList.add("accordion-item");
+              seasonsAccordion.appendChild(seasonItem);
       
-                const seasonHeader = document.createElement("h2");
-                seasonHeader.classList.add("accordion-header");
-                seasonItem.appendChild(seasonHeader);
+              const seasonHeader = document.createElement("h2");
+              seasonHeader.classList.add("accordion-header");
+              seasonHeader.id = `headingSeason${i}`;
+              seasonItem.appendChild(seasonHeader);
       
-                const seasonButton = document.createElement("button");
-                seasonButton.classList.add("accordion-button", "collapsed");
-                seasonButton.setAttribute("type", "button");
-                seasonButton.setAttribute("data-bs-toggle", "collapse");
-                seasonButton.setAttribute("data-bs-target", `#season${i}`);
-                seasonButton.innerHTML = `Saison ${i}`;
-                seasonHeader.appendChild(seasonButton);
+              const seasonButton = document.createElement("button");
+              seasonButton.classList.add("accordion-button", "collapsed");
+              seasonButton.setAttribute("type", "button");
+              seasonButton.setAttribute("data-bs-toggle", "collapse");
+              seasonButton.setAttribute("data-bs-target", `#collapseSeason${i}`);
+              seasonButton.setAttribute("aria-expanded", "false");
+              seasonButton.setAttribute("aria-controls", `collapseSeason${i}`);
+              seasonButton.textContent = `Saison ${i}`;
+              seasonHeader.appendChild(seasonButton);
       
-                // Crée un conteneur pour les épisodes de la saison
-                const seasonCollapse = document.createElement("div");
-                seasonCollapse.setAttribute("id", `season${i}`);
-                seasonCollapse.classList.add("accordion-collapse", "collapse");
-                seasonCollapse.setAttribute("data-bs-parent", "#tvSeasonsAccordion");
-                seasonItem.appendChild(seasonCollapse);
+              const seasonCollapse = document.createElement("div");
+              seasonCollapse.id = `collapseSeason${i}`;
+              seasonCollapse.classList.add("accordion-collapse", "collapse");
+              seasonCollapse.setAttribute("aria-labelledby", `headingSeason${i}`);
+              seasonCollapse.setAttribute("data-bs-parent", "#tvSeasonsAccordion");
+              seasonItem.appendChild(seasonCollapse);
       
-                const seasonBody = document.createElement("div");
-                seasonBody.classList.add("accordion-body");
-                seasonCollapse.appendChild(seasonBody);
+              const seasonBody = document.createElement("div");
+              seasonBody.classList.add("accordion-body");
+              seasonCollapse.appendChild(seasonBody);
       
-                // Ajoute les épisodes de la saison à l'élément seasonBody
-                const episodesContainer = document.createElement("div");
-                seasonBody.appendChild(episodesContainer);
+              seasonDetails.episodes.forEach(episode => {
+                const episodeItem = document.createElement("div");
+                episodeItem.classList.add("accordion-item");
       
-                // Crée un accordéon pour les épisodes de la saison
-                const episodeAccordion = document.createElement("div");
-                episodeAccordion.classList.add("accordion", "accordion-flush");
-                episodesContainer.appendChild(episodeAccordion);
+                const episodeHeader = document.createElement("h2");
+                episodeHeader.classList.add("accordion-header");
+                episodeHeader.id = `headingEpisode${episode.id}`;
+                episodeItem.appendChild(episodeHeader);
       
-                seasonDetails.episodes.forEach(episode => {
-                  const episodeItem = document.createElement("div");
-                  episodeItem.classList.add("episode-item");
+                const episodeButton = document.createElement("button");
+                episodeButton.classList.add("accordion-button", "collapsed");
+                episodeButton.setAttribute("type", "button");
+                episodeButton.setAttribute("data-bs-toggle", "collapse");
+                episodeButton.setAttribute("data-bs-target", `#collapseEpisode${episode.id}`);
+                episodeButton.setAttribute("aria-expanded", "false");
+                episodeButton.setAttribute("aria-controls", `collapseEpisode${episode.id}`);
+                episodeButton.textContent = `Épisode ${episode.episode_number}: ${episode.name}`;
+                episodeHeader.appendChild(episodeButton);
       
-                  const episodeHeader = document.createElement("h2");
-                  episodeHeader.classList.add("episode-header");
-                  episodeItem.appendChild(episodeHeader);
+                const episodeCollapse = document.createElement("div");
+                episodeCollapse.id = `collapseEpisode${episode.id}`;
+                episodeCollapse.classList.add("accordion-collapse", "collapse");
+                episodeCollapse.setAttribute("aria-labelledby", `headingEpisode${episode.id}`);
+                episodeCollapse.setAttribute("data-bs-parent", `#collapseSeason${i}`);
+                episodeItem.appendChild(episodeCollapse);
       
-                  const episodeButton = document.createElement("button");
-                  episodeButton.classList.add("episode-button", "collapsed");
-                  episodeButton.setAttribute("type", "button");
-                  episodeButton.setAttribute("data-bs-toggle", "collapse");
-                  episodeButton.setAttribute("data-bs-target", `#episode${episode.id}`);
-                  episodeButton.innerHTML = `Épisode ${episode.episode_number} : ${episode.name}`;
-                  episodeHeader.appendChild(episodeButton);
-                  episodeButton.addEventListener('click', event => {
-                    // Empêche la propagation de l'événement de clic jusqu'à l'accordéon parent
-                    event.stopPropagation();
-                
-                    
-                });
-
-
-                  const episodeCollapse = document.createElement("div");
-                  episodeCollapse.setAttribute("id", `episode${episode.id}`);
-                  episodeCollapse.classList.add("accordion-collapse", "collapse");
-                  episodeCollapse.setAttribute("data-bs-parent", "#tvSeasonsAccordion");
-                  episodeItem.appendChild(episodeCollapse);
+                const episodeBody = document.createElement("div");
+                episodeBody.classList.add("accordion-body");
+                episodeBody.textContent = episode.overview; // Vous pouvez ajuster pour inclure plus de détails
+                episodeCollapse.appendChild(episodeBody);
       
-                  const episodeBody = document.createElement("div");
-                  episodeBody.classList.add("episode-body");
-                  episodeCollapse.appendChild(episodeBody);
-      
-                  const episodeOverview = document.createElement("p");
-                  episodeOverview.textContent = episode.overview;
-                  episodeBody.appendChild(episodeOverview);
-      
-                  episodeAccordion.appendChild(episodeItem);
-                });
-              } else {
-                console.error(`Détails de la saison ${i} non trouvés`);
-              }
-            } catch (error) {
-              console.error(
-                `Erreur lors de la récupération des détails de la saison ${i} :`,
-                error
-              );
+                seasonBody.appendChild(episodeItem);
+              });
+            } else {
+              console.error(`Détails de la saison ${i} non trouvés`);
             }
           }
         } else {
-          console.error(
-            "Impossible de récupérer le nombre de saisons pour la série TV"
-          );
+          console.error("Impossible de récupérer le nombre de saisons pour la série TV");
         }
     }
-
     async function getTvSimilar(tvId) {
         const apiUrl = `https://api.themoviedb.org/3/tv/${tvId}/similar?language=en-US&page=1&api_key=${apiKey}`;    
         try {

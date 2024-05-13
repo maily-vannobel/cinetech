@@ -16,6 +16,11 @@
     background-color: #415a77;
 }
 
+h2 {color:#f1f1f1}
+h3 {
+  color:#f1f1f1
+}
+
 
 
 /* COULEURS PERSO */
@@ -40,18 +45,11 @@
     margin-bottom: 10px;
   }
   
-  .accordion-header {
-    background-color: #1b263b; 
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-  }
+
   
-  
-/* Style pour les épisodes */
+/* Style pour les épisodes (accordeon) */
   
   .episode-header {
-    background-color: #415a77; 
     color: #ffffff;
     cursor: pointer;
     font-size: 15px;
@@ -96,13 +94,12 @@
   
   .tv-series {
     flex: 0 0 auto; 
-    margin-right: 20px; 
   }
   .tv-series img {
     max-width: 50%; 
     height: auto; 
     display: block; 
-    margin-top: 5px; 
+    margin-top: 15px; 
   }
   
 
